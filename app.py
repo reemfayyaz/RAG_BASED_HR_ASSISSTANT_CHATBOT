@@ -47,92 +47,228 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+        :root {
+            --bg-soft: #f4fbf5;
+            --bg-ice: #edfdf4;
+            --green-50: #f0fdf4;
+            --green-100: #dcfce7;
+            --green-200: #bbf7d0;
+            --green-300: #86efac;
+            --green-500: #22c55e;
+            --green-600: #16a34a;
+            --green-700: #15803d;
+            --green-800: #166534;
+            --green-900: #14532d;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-500: #64748b;
+            --white: #ffffff;
+            --shadow-soft: 0 16px 40px rgba(22, 163, 74, 0.12);
+        }
+
         .stApp {
-            background: linear-gradient(135deg, #f7f9fc 0%, #eef3f9 100%);
+            background: linear-gradient(135deg, #f5fff8 0%, #ecfdf5 35%, #f3f9ff 100%);
         }
 
         .main-header {
-            padding: 1.4rem 1.6rem;
-            border-radius: 18px;
-            background: linear-gradient(135deg, #172554, #2563eb);
+            padding: 1.6rem 1.7rem;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #0d3b2f 0%, #0f6b45 35%, #4ade80 100%);
             color: white;
-            margin-bottom: 1.2rem;
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.18);
+            margin-bottom: 1.3rem;
+            box-shadow: 0 18px 36px rgba(21, 128, 61, 0.22);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 32%);
+            pointer-events: none;
         }
 
         .main-header h1 {
             margin: 0;
-            font-size: 2.1rem;
-            font-weight: 800;
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            position: relative;
+            z-index: 1;
         }
 
         .main-header p {
-            margin: 0.45rem 0 0;
-            opacity: 0.9;
-            font-size: 1rem;
+            margin: 0.5rem 0 0;
+            opacity: 0.96;
+            font-size: 1.02rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pulse-card {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 14px;
+            padding: 0.7rem 0.9rem;
+            color: white;
+            backdrop-filter: blur(4px);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-top: 0.8rem;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #bbf7d0;
+            box-shadow: 0 0 0 0 rgba(187,247,208,0.65);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(187,247,208,0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(187,247,208,0); }
+            100% { box-shadow: 0 0 0 0 rgba(187,247,208,0); }
         }
 
         .metric-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1rem;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
-            min-height: 105px;
+            background: linear-gradient(180deg, #ffffff 0%, #f6fff9 100%);
+            border-radius: 18px;
+            padding: 1rem 1.1rem;
+            border: 1px solid #d9fbe8;
+            box-shadow: 0 12px 28px rgba(15, 118, 110, 0.07);
+            min-height: 110px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 32px rgba(21, 128, 61, 0.12);
+        }
+
+        .metric-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 72px;
+            height: 72px;
+            background: radial-gradient(circle, rgba(74,222,128,0.16), transparent 62%);
         }
 
         .metric-title {
-            color: #64748b;
-            font-size: 0.85rem;
-            font-weight: 600;
+            color: #4b7a5a;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
         }
 
         .metric-value {
-            color: #172554;
-            font-size: 1.55rem;
-            font-weight: 800;
-            margin-top: 0.35rem;
+            color: #0f172a;
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-top: 0.45rem;
+            position: relative;
+            z-index: 1;
         }
 
         .answer-box {
-            background: white;
-            border-left: 5px solid #2563eb;
-            border-radius: 14px;
+            background: linear-gradient(180deg, #ffffff 0%, #f4fff7 100%);
+            border-left: 6px solid #22c55e;
+            border-radius: 16px;
             padding: 1.2rem 1.3rem;
             margin: 0.8rem 0 1rem;
-            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
+            box-shadow: 0 12px 26px rgba(22, 163, 74, 0.08);
+            border-top: 1px solid #ddf7e4;
+            border-right: 1px solid #ddf7e4;
+            border-bottom: 1px solid #ddf7e4;
         }
 
         .source-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fdf9 100%);
+            border: 1px solid #d9f5df;
+            border-left: 5px solid #16a34a;
+            border-radius: 14px;
             padding: 0.9rem 1rem;
-            margin: 0.5rem 0;
+            margin: 0.6rem 0;
+            box-shadow: 0 8px 18px rgba(22, 163, 74, 0.04);
         }
 
         .source-name {
-            color: #1d4ed8;
-            font-weight: 750;
+            color: #166534;
+            font-weight: 800;
         }
 
         .source-score {
-            color: #64748b;
-            font-size: 0.82rem;
+            color: #5b7a64;
+            font-size: 0.8rem;
+            font-weight: 700;
         }
 
         .small-note {
-            color: #64748b;
-            font-size: 0.85rem;
+            color: #4b7a5a;
+            font-size: 0.83rem;
         }
 
         div[data-testid="stSidebar"] {
-            background: #f8fafc;
+            background: linear-gradient(180deg, #f7fff9 0%, #eefaf4 100%);
         }
 
         .stButton > button {
-            border-radius: 10px;
-            font-weight: 650;
+            border-radius: 12px;
+            font-weight: 700;
+            border: 1px solid #a7f3d0;
+            background: linear-gradient(180deg, #ffffff 0%, #f3fff8 100%);
+            color: #14532d;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 18px rgba(34, 197, 94, 0.08);
+        }
+
+        .stButton > button:hover {
+            border-color: #4ade80;
+            background: linear-gradient(180deg, #effdf5 0%, #dcfce7 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(34, 197, 94, 0.12);
+        }
+
+        .stButton > button:focus {
+            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+        }
+
+        section[data-testid="stSidebarContent"] .stMarkdown h3,
+        section[data-testid="stSidebarContent"] .stMarkdown h2 {
+            color: #14532d;
+        }
+
+        .policy-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.38rem 0.8rem;
+            border-radius: 999px;
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 768px) {
+            .main-header h1 {
+                font-size: 1.7rem;
+            }
         }
     </style>
     """,
@@ -744,6 +880,10 @@ st.markdown(
             Ask questions about HR policies and receive answers
             grounded in your organization's knowledge base.
         </p>
+        <div class="pulse-card">
+            <span class="pulse-dot"></span>
+            HR intelligence is active and ready
+        </div>
     </div>
     """,
     unsafe_allow_html=True,
@@ -761,9 +901,8 @@ with col1:
         f"""
         <div class="metric-card">
             <div class="metric-title">HR Documents</div>
-            <div class="metric-value">
-                {len(st.session_state.documents)}
-            </div>
+            <div class="metric-value">{len(st.session_state.documents)}</div>
+            <div class="small-note">Loaded policy files</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -774,9 +913,8 @@ with col2:
         f"""
         <div class="metric-card">
             <div class="metric-title">Knowledge Chunks</div>
-            <div class="metric-value">
-                {len(chunks_df)}
-            </div>
+            <div class="metric-value">{len(chunks_df)}</div>
+            <div class="small-note">Semantic search units</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -788,9 +926,8 @@ with col3:
         f"""
         <div class="metric-card">
             <div class="metric-title">Vector Search</div>
-            <div class="metric-value">
-                {status}
-            </div>
+            <div class="metric-value">{status}</div>
+            <div class="small-note">FAISS retrieval</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -801,9 +938,8 @@ with col4:
         f"""
         <div class="metric-card">
             <div class="metric-title">Answer Mode</div>
-            <div class="metric-value">
-                {provider}
-            </div>
+            <div class="metric-value">{provider}</div>
+            <div class="small-note">Powered by policy context</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -856,16 +992,9 @@ for message in st.session_state.messages:
                     st.markdown(
                         f"""
                         <div class="source-box">
-                            <div class="source-name">
-                                📄 {source["filename"]}
-                            </div>
-                            <div class="source-score">
-                                Similarity:
-                                {source["score"]:.3f}
-                            </div>
-                            <div style="margin-top:6px;">
-                                {source["text"]}
-                            </div>
+                            <div class="source-name">📄 {source["filename"]}</div>
+                            <div class="source-score">Similarity: {source["score"]:.3f}</div>
+                            <div style="margin-top:6px;">{source["text"]}</div>
                         </div>
                         """,
                         unsafe_allow_html=True,
@@ -931,10 +1060,8 @@ if user_query:
         st.markdown(
             f"""
             <div class="answer-box">
-                <strong>🤖 HR Assistant</strong>
-                <div style="margin-top:10px;">
-                    {answer.replace(chr(10), "<br>")}
-                </div>
+                <div class="policy-badge">🤖 HR Assistant</div>
+                <div style="margin-top:12px;">{answer.replace(chr(10), "<br>")}</div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -946,16 +1073,9 @@ if user_query:
                     st.markdown(
                         f"""
                         <div class="source-box">
-                            <div class="source-name">
-                                📄 {source["filename"]}
-                            </div>
-                            <div class="source-score">
-                                Similarity:
-                                {source["score"]:.3f}
-                            </div>
-                            <div style="margin-top:6px;">
-                                {source["text"]}
-                            </div>
+                            <div class="source-name">📄 {source["filename"]}</div>
+                            <div class="source-score">Similarity: {source["score"]:.3f}</div>
+                            <div style="margin-top:6px;">{source["text"]}</div>
                         </div>
                         """,
                         unsafe_allow_html=True,
@@ -979,7 +1099,7 @@ st.divider()
 
 st.markdown(
     """
-    <div style="text-align:center; color:#64748b; padding:10px;">
+    <div style="text-align:center; color:#3b5d4a; padding:10px;">
         <b>RAG-Based HR Assistant</b> ·
         Semantic Search with SentenceTransformers + FAISS
         <br>
@@ -990,3 +1110,5 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+"""}]}
